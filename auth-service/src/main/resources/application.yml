@@ -25,3 +25,9 @@ jwt:
   token:
     secret: ${SECRET_KEY}
     expires: 30
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
