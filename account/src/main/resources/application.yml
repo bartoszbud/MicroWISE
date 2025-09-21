@@ -25,3 +25,9 @@ management:
     web:
       exposure:
         include: "*"
+  otlp:
+    metrics:
+      export:
+        url: http://otel-collector:4318/v1/metrics
+        resource-attributes: service.name=account
+        step: 10s
