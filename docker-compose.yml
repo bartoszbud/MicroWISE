@@ -61,16 +61,19 @@ services:
       - 9090:9090
     volumes:
       - ./prometheus/prometheus-config.yml:/etc/prometheus/prometheus.yml
+  loki:
+    image: grafana/loki:3.5
+    container_name: loki
+    restart: always
   otel-collector:
     image: otel/opentelemetry-collector:latest
     container_name: otel-collector
     restart: always
-    ports:
-      - 4317:4317
-      - 4318:4318
-      - 9464:9464
     volumes:
       - ./otel-collector/otel-collector-config.yml:/etc/otelcol/config.yaml
+    depends_on:
+      - prometheus
+      - loki
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -84,3 +87,4 @@ services:
       - ./grafana/dashboards/:/var/lib/grafana/dashboards/
     depends_on:
       - prometheus
+      - loki
