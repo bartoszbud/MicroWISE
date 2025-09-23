@@ -1,3 +1,4 @@
+
 services:
   db-auth:
     container_name: db-auth
@@ -30,8 +31,6 @@ services:
     image: auth-service:0.0.6
     container_name: auth-service
     restart: always
-    ports:
-      - 8080:8080
     depends_on:
       - db-auth
     environment:
