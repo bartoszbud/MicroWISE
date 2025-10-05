@@ -10,6 +10,7 @@ FROM ubuntu/jre:21-24.04_stable
 
 WORKDIR /opt/app
 
-COPY --from=builder /opt/build/target/account*.jar /opt/app/account.jar 
+COPY --from=builder /opt/build/target/account*.jar /opt/app/account.jar
+#ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar /opt/app/opentelemetry-javaagent.jar
 
 CMD [ "exec", "java", "-Xmx256M","-Dspring.profiles.active=default","-jar", "/opt/app/account.jar" ]

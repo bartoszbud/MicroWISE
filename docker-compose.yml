@@ -1,4 +1,3 @@
-
 services:
   db-auth:
     container_name: db-auth

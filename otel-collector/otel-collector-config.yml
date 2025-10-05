@@ -7,27 +7,74 @@ receivers:
         endpoint: "0.0.0.0:4317"
 
 processors:
+  # batch metrics before sending to reduce API usage
   batch:
+    send_batch_max_size: 1000
     send_batch_size: 100
-    timeout: 1s
+    timeout: 10s
 
 exporters:
-  debug:
-    verbosity: detailed
   prometheus:
-    endpoint: "0.0.0.0:9464"
-  otlphttp/loki:
-    endpoint: http://loki:3100/loki/api/v1/push
+    endpoint: "prometheus:9090"
 
+  #prometheus:
+  #  endpoint: "0.0.0.0:8889"
+  #  enable_open_metrics: true
+
+  #otlp/jaeger:
+  #  endpoint: "http://jaeger:4317"
+  #  tls:
+  #    insecure: true
+
+  #zipkin:
+  #  endpoint: http://zipkin:9411/api/v2/spans
+  #  format: proto
+
+  #otlp/tempo:
+  #  endpoint: "http://tempo:4317"
+  #  tls:
+  #    insecure: true
+
+  otlphttp/loki:
+    endpoint: "http://loki:3100/loki/api/v1/push"
 
 service:
   pipelines:
-    traces:
-      receivers: [otlp]
-      exporters: [debug]
     metrics:
       receivers: [otlp]
-      exporters: [debug, prometheus]
+      processors: [batch]
+      exporters: [prometheus]
+    #traces:
+    #  receivers: [otlp]
+    #  processors: [batch]
+    #  exporters: [otlp/jaeger,zipkin,otlp/tempo]
     logs:
       receivers: [otlp]
+      processors: [batch]
       exporters: [otlphttp/loki]
+
+#processors:
+#  batch:
+#    send_batch_size: 100
+#    timeout: 1s
+
+#exporters:
+#  debug:
+#    verbosity: detailed
+#  prometheus:
+#    endpoint: "0.0.0.0:9464"
+#  otlphttp/loki:
+#    endpoint: http://loki:3100/loki/api/v1/push
+
+
+#service:
+#  pipelines:
+#    traces:
+#      receivers: [otlp]
+#      exporters: [debug]
+#    metrics:
+#      receivers: [otlp]
+#      exporters: [debug, prometheus]
+#    logs:
+#      receivers: [otlp]
+#      exporters: [otlphttp/loki]

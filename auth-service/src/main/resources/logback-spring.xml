@@ -1,42 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-  <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-    <encoder>
-      <pattern>
-        %d{HH:mm:ss.SSS} %-5level %logger{36} %X{X-Request-ID} - %msg%n
-      </pattern>
-    </encoder>
-  </appender>
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml" />
+    <appender name="OPEN_TELEMETRY"
+              class="io.opentelemetry.instrumentation.logback.appender.v1_0.OpenTelemetryAppender">
+        <captureExperimentalAttributes>true</captureExperimentalAttributes>
+        <captureKeyValuePairAttributes>true</captureKeyValuePairAttributes>
+        <captureMdcAttributes>*</captureMdcAttributes>
+    </appender>
 
-  <appender name="LOKI" class="com.github.loki4j.logback.Loki4jAppender">
-    <labels>
-      app = auth-service
-    </labels>
-    <http>
-      <url>http://localhost:3100/loki/api/v1/push</url>
-    </http>
-    <format>
-      <label>
-        <pattern>app=${name},host=${HOSTNAME},level=%level</pattern>
-        <readMarkers>true</readMarkers>
-      </label>
-      <message>
-        <pattern>
-          {
-          "level":"%level",
-          "class":"%logger{36}",
-          "thread":"%thread",
-          "message": "%message",
-          "requestId": "%X{X-Request-ID}"
-          }
-        </pattern>
-      </message>
-    </format>
-  </appender>
-
-  <root level="INFO">
-    <appender-ref ref="CONSOLE" />
-    <appender-ref ref="LOKI" />
-  </root>
-
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="OPEN_TELEMETRY"/>
+    </root>
 </configuration>

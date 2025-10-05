@@ -2,38 +2,40 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
 		<version>3.5.5</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
+	
 	<groupId>pl.lab</groupId>
 	<artifactId>auth-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>auth-service</name>
 	<description>Auth Service</description>
-	<url/>
-	<licenses>
-		<license/>
-	</licenses>
-	<developers>
-		<developer/>
-	</developers>
-	<scm>
-		<connection/>
-		<developerConnection/>
-		<tag/>
-		<url/>
-	</scm>
+	
 	<properties>
 		<java.version>21</java.version>
+		<spring-boot-admin.version>3.5.0</spring-boot-admin.version>
+    <spring-cloud.version>2025.0.0</spring-cloud.version>
 	</properties>
+
 	<dependencies>
+		<!-- Spring Boot -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
+		<dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
@@ -42,48 +44,92 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-web</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-otlp</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-prometheus</artifactId>
-			<scope>runtime</scope>
-		</dependency>
-		<dependency>
-      		<groupId>io.micrometer</groupId>
-     		<artifactId>micrometer-tracing-bridge-brave</artifactId>
-    	</dependency>
-		<dependency>
-      <groupId>org.springframework.boot</groupId>
-      <artifactId>spring-boot-starter-data-jpa</artifactId>
+		
+		<!-- Spring Boot Admin -->
+    <dependency>
+      <groupId>de.codecentric</groupId>
+      <artifactId>spring-boot-admin-starter-client</artifactId>
     </dependency>
+		
+		<!-- Spring Cloud -->
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-config</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+    </dependency>
+
+		<!-- Micrometer / Monitoring -->
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-otlp</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-registry-prometheus</artifactId>
+      <scope>runtime</scope>
+    </dependency>
+    <dependency>
+      <groupId>io.micrometer</groupId>
+      <artifactId>micrometer-tracing-bridge-brave</artifactId>
+    </dependency>
+
+    <!-- OpenTelemetry libs (bez agenta) -->
+    <dependency>
+      <groupId>io.opentelemetry.instrumentation</groupId>
+      <artifactId>opentelemetry-spring-boot-starter</artifactId>
+	  <version>2.20.1</version>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-sdk</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.opentelemetry</groupId>
+      <artifactId>opentelemetry-exporter-otlp</artifactId>
+    </dependency>
+		
+		<!-- Database -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+		
+		<!-- Testing -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-test</artifactId>
+      <scope>test</scope>
+    </dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- Lombok -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+
+		<!-- Logging (Loki) -->
+		<dependency>
+    		<groupId>com.github.loki4j</groupId>
+    		<artifactId>loki-logback-appender</artifactId>
+    		<version>2.0.0</version>
+		</dependency>
+
+		<!-- JWT -->
 		<dependency>
     		<groupId>jakarta.validation</groupId>
     		<artifactId>jakarta.validation-api</artifactId>
@@ -106,12 +152,46 @@
     		<version>0.12.7</version>
     		<scope>runtime</scope>
 		</dependency>
-		<dependency>
-    		<groupId>com.github.loki4j</groupId>
-    		<artifactId>loki-logback-appender</artifactId>
-    		<version>2.0.0</version>
-		</dependency>
 	</dependencies>
+
+			<dependencyManagement>
+    	<dependencies>
+      	<!-- Spring Cloud BOM -->
+      	<dependency>
+        	<groupId>org.springframework.cloud</groupId>
+        	<artifactId>spring-cloud-dependencies</artifactId>
+        	<version>${spring-cloud.version}</version>
+        	<type>pom</type>
+        	<scope>import</scope>
+      	</dependency>
+
+      	<!-- Spring Boot Admin BOM -->
+      	<dependency>
+        	<groupId>de.codecentric</groupId>
+        	<artifactId>spring-boot-admin-dependencies</artifactId>
+        	<version>${spring-boot-admin.version}</version>
+        	<type>pom</type>
+        	<scope>import</scope>
+      	</dependency>
+
+      	<!-- OpenTelemetry core BOM -->
+      	<dependency>
+        	<groupId>io.opentelemetry</groupId>
+        	<artifactId>opentelemetry-bom</artifactId>
+        	<version>1.54.1</version>
+        	<type>pom</type>
+        	<scope>import</scope>
+      	</dependency>
+
+      	<!-- OpenTelemetry instrumentation BOM -->
+      	<dependency>
+    			<groupId>io.opentelemetry.instrumentation</groupId>
+    			<artifactId>opentelemetry-instrumentation-bom</artifactId>
+    			<version>2.11.0</version>
+    			<type>pom</type>
+	  		</dependency>
+    	</dependencies>
+  	</dependencyManagement>
 
 	<build>
 		<plugins>
