@@ -56,13 +56,13 @@
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-config</artifactId>
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-    </dependency>
+    </dependency>-->
 
-		<!-- Micrometer / Monitoring -->
-    <dependency>
+	<!-- Micrometer / Monitoring -->
+    <!--<dependency>
       <groupId>io.micrometer</groupId>
       <artifactId>micrometer-registry-otlp</artifactId>
       <scope>runtime</scope>
@@ -75,7 +75,7 @@
     <dependency>
       <groupId>io.micrometer</groupId>
       <artifactId>micrometer-tracing-bridge-brave</artifactId>
-    </dependency>
+    </dependency>-->
 
     <!-- OpenTelemetry libs (bez agenta) -->
     <dependency>

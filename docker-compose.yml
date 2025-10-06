@@ -63,6 +63,14 @@ services:
     image: grafana/loki:3.5
     container_name: loki
     restart: always
+    volumes:
+      - ./loki/local-config.yaml:/etc/loki/local-config.yaml
+  jaeger:
+    image: jaegertracing/all-in-one:1.74.0
+    container_name: jaeger
+    restart: always
+    ports:
+      - 16686:16686
   otel-collector:
     image: otel/opentelemetry-collector:latest
     container_name: otel-collector
