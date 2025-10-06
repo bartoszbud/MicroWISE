@@ -80,6 +80,7 @@ services:
     depends_on:
       - prometheus
       - loki
+      - jaeger
   grafana:
     image: grafana/grafana:latest
     container_name: grafana
@@ -94,3 +95,4 @@ services:
     depends_on:
       - prometheus
       - loki
+      - jaeger
