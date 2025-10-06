@@ -13,4 +13,4 @@ WORKDIR /opt/app
 COPY --from=builder /opt/build/target/account*.jar /opt/app/account.jar
 #ADD https://github.com/open-telemetry/opentelemetry-java-instrumentation/releases/latest/download/opentelemetry-javaagent.jar /opt/app/opentelemetry-javaagent.jar
 
-CMD [ "exec", "java", "-Xmx256M","-Dspring.profiles.active=default","-jar", "/opt/app/account.jar" ]
+CMD [ "exec", "java", "-Xmx256M","-Dspring.profiles.active=default","-Dotel.java.global-autoconfigure.enabled=true","-jar", "/opt/app/account.jar"]

@@ -42,6 +42,9 @@ management:
           env: dev
 
 otel:
+  instrumentation:
+    micrometer:
+      enabled: true
   exporter:
     otlp:
       protocol: http/protobuf
