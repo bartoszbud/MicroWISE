@@ -17,6 +17,23 @@ services:
       POSTGRES_USER: account
       POSTGRES_PASSWORD: account123
       POSTGRES_DB: account
+  vault:
+    container_name: vault
+    image: vault:1.13.3
+    ports:
+      - 8200:8200
+    cap_add:
+      - IPC_LOCK
+    environment:
+      - VAULT_ADDR=http://127.0.0.1:8200
+    volumes:
+      - ./vault/config.hcl:/vault/config/config.hcl
+      - ./vault/unseal.sh:/tmp/unseal.sh
+    command: >
+      sh -c 'vault server -config=/vault/config/config.hcl \
+      chmod u+x /tmp/unseal.sh \ 
+      sleep 15 \
+      sh /tmp/unseal.sh'
   adminer:
     image: adminer
     restart: always
