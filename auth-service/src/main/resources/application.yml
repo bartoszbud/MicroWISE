@@ -25,3 +25,32 @@ jwt:
   token:
     secret: ${SECRET_KEY}
     expires: 30
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    export:
+      otlp:
+        enabled: true
+        endpoint: http://otel-collector:4318
+        protocol: http/protobuf
+        resource-attributes: 
+          service.name: auth-service
+          env: dev
+
+otel:
+  instrumentation:
+    micrometer:
+      enabled: true
+  exporter:
+    otlp:
+      protocol: http/protobuf
+      endpoint: http://otel-collector:4318
+  resource:
+    attributes:
+      service.name: auth-service
+      service: auth-service
+      env: dev

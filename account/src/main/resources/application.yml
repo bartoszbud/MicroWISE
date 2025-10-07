@@ -25,3 +25,17 @@ management:
     web:
       exposure:
         include: "*"
+
+otel:
+  instrumentation:
+    micrometer:
+      enabled: true
+  exporter:
+    otlp:
+      protocol: http/protobuf
+      endpoint: http://otel-collector:4318
+  resource:
+    attributes:
+      service.name: account-service
+      service: account-service
+      env: dev

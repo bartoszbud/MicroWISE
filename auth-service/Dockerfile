@@ -13,4 +13,4 @@ WORKDIR /opt/app
 
 COPY --from=builder /opt/build/target/auth-service*.jar /opt/app/auth-service.jar 
 
-CMD [ "exec", "java", "-Xmx256M","-Dspring.profiles.active=default","-jar", "/opt/app/auth-service.jar" ]
+CMD [ "exec", "java", "-Xmx256M","-Dspring.profiles.active=default","-Dotel.java.global-autoconfigure.enabled=true","-jar", "/opt/app/auth-service.jar" ]
