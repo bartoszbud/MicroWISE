@@ -5,16 +5,26 @@ spring:
   application:
     name: auth-service
   config:
-    import: "optional:configserver:"
+    import: "optional:configserver:,vault://"
   datasource:
     url: jdbc:postgresql://db-auth:5432/auth
-    username: auth
-    password: auth123
+    username: ${db.username}
+    password: ${db.password}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
       show-sql: true
+  cloud:
+    vault:
+      uri: http://vault:8200/
+      token: micro-wise
+      scheme: http
+      kv:
+        enabled: true
+        version: 2
+        backend: secret
+        profiles: ${spring.profiles.active}
 
 logging:
   level:

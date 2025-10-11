@@ -7,12 +7,12 @@ eureka:
 
 spring:
   application:
-    name: account
+    name: account-service
   config:
     import: "optional:configserver:,vault://"
   datasource:
     url: jdbc:postgresql://db-account:5432/account
-    username: $(db.username)
+    username: ${db.username}
     password: ${db.password}
     driver-class-name: org.postgresql.Driver
   jpa:
@@ -28,8 +28,7 @@ spring:
         enabled: true
         version: 2
         backend: secret
-        default-context: account
-        profile: ""
+        profiles: ${spring.profiles.active}
         
 management:
   endpoints:
