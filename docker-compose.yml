@@ -1,56 +1,9 @@
 services:
-  db-auth:
-    container_name: db-auth
-    image: postgres
-    restart: always
-    shm_size: 128mb
-    environment:
-      POSTGRES_DB: auth
-      POSTGRES_USER: auth
-      POSTGRES_PASSWORD: auth123
-  db-account:
-    container_name: db-account
-    image: postgres
-    restart: always
-    shm_size: 128mb
-    environment:
-      POSTGRES_USER: account
-      POSTGRES_PASSWORD: account123
-      POSTGRES_DB: account
   adminer:
     image: adminer
     restart: always
     ports:
       - 5433:8080
-    depends_on:
-      - db-auth
-      - db-account
-  auth:
-    build: ./auth-service
-    image: auth-service:0.0.6
-    container_name: auth-service
-    restart: always
-    depends_on:
-      - db-auth
-    environment:
-      SECRET_KEY: "gAHIHtgTBVT0LKqGOZpaM2CacosnA7WTMK/DY8yp18CpLg54omSnYLmhDHe3/+dWlWXPFDtqWjKpzV2ehyayIQ=="
-  account:
-    build: ./account
-    image: account:0.0.1
-    container_name: account
-    restart: always
-    depends_on:
-      - db-account
-  frontend:
-    build: ./frontend
-    image: frontend:0.0.6
-    container_name: front
-    restart: always
-    ports:
-      - 8081:80
-    depends_on:
-      - auth
-      - account
   prometheus:
     image: prom/prometheus:latest
     container_name: prometheus
@@ -96,3 +49,60 @@ services:
       - prometheus
       - loki
       - jaeger
+  vault:
+    container_name: vault
+    image: hashicorp/vault:1.20.4
+    ports:
+      - 8200:8200
+    cap_add:
+      - IPC_LOCK
+    environment:
+      - VAULT_ADDR=http://0.0.0.0:8200
+      - VAULT_DEV_ROOT_TOKEN_ID=micro-wise
+  db-auth:
+    container_name: db-auth
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_DB: auth
+      POSTGRES_USER: auth
+      POSTGRES_PASSWORD: auth123
+  db-account:
+    container_name: db-account
+    image: postgres
+    restart: always
+    shm_size: 128mb
+    environment:
+      POSTGRES_USER: account
+      POSTGRES_PASSWORD: account123
+      POSTGRES_DB: account
+  auth:
+    build: ./auth-service
+    image: auth-service:0.0.6
+    container_name: auth-service
+    restart: always
+    depends_on:
+      - db-auth
+      - vault
+    environment:
+      SECRET_KEY: "gAHIHtgTBVT0LKqGOZpaM2CacosnA7WTMK/DY8yp18CpLg54omSnYLmhDHe3/+dWlWXPFDtqWjKpzV2ehyayIQ=="
+  account:
+    build: ./account
+    image: account:0.0.1
+    container_name: account
+    restart: always
+    depends_on:
+      - db-account
+      - vault
+  frontend:
+    build: ./frontend
+    image: frontend:0.0.6
+    container_name: front
+    restart: always
+    ports:
+      - 8081:80
+    depends_on:
+      - auth
+      - account
+  

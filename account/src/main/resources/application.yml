@@ -7,19 +7,29 @@ eureka:
 
 spring:
   application:
-    name: account
+    name: account-service
   config:
-    import: "optional:configserver:"
+    import: "optional:configserver:,vault://"
   datasource:
     url: jdbc:postgresql://db-account:5432/account
-    username: account
-    password: account123
+    username: ${db.username}
+    password: ${db.password}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
       ddl-auto: update
       show-sql: true
-
+  cloud:
+    vault:
+      uri: http://vault:8200/
+      token: micro-wise
+      scheme: http
+      kv:
+        enabled: true
+        version: 2
+        backend: secret
+        profiles: ${spring.profiles.active}
+        
 management:
   endpoints:
     web:
