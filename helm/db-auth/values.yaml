@@ -161,6 +161,6 @@ tolerations: []
 affinity: {}
 
 env:
-  POSTGRES_DB: account
-  POSTGRES_USER: account
-  POSTGRES_PASSWORD: account123
+  POSTGRES_DB: auth
+  POSTGRES_USER: auth
+  POSTGRES_PASSWORD: auth123
