@@ -48,7 +48,7 @@ spec:
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ include "db-account.fullname" . }}-secret
+                  name: {{ include "db-auth.fullname" . }}-secret
                   key: POSTGRES_PASSWORD
           ports:
             - name: http
