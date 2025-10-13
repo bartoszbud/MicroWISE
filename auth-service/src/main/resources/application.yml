@@ -33,7 +33,7 @@ logging:
         security: DEBUG
 jwt:
   token:
-    secret: ${SECRET_KEY}
+    secret: ${jwt.token}
     expires: 30
 
 management:
