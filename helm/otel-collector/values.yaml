@@ -58,6 +58,7 @@ service_collector:
 
 service_exporter:
   type: ClusterIP
+  targetPort: 9464
   port: 9464
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
@@ -154,7 +155,7 @@ volumes:
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: 
   - name: otel-collector-config
-    mountPath: /etc/otelcol/config.yaml
+    mountPath: /etc/otelcol/
 
 nodeSelector: {}
 
