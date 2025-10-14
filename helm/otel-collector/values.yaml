@@ -142,7 +142,7 @@ autoscaling:
   # targetMemoryUtilizationPercentage: 80
 
 # Additional volumes on the output Deployment definition.
-volumes: []
+volumes:
   - name: otel-collector-config
     configMap:
       name: {{ include "otel-collector.fullname" . }}-config
