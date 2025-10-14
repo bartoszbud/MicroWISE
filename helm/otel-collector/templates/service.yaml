@@ -1,29 +1,15 @@
-{{- range .Values.services }}
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "otel-collector.fullname" $ }}-{{ .name }}
+  name: {{ include "otel-collector.fullname" . }}
   labels:
-    app.kubernetes.io/name: {{ include "otel-collector.name" $ }}
-    app.kubernetes.io/instance: {{ $.Release.Name }}
+    {{- include "otel-collector.labels" . | nindent 4 }}
 spec:
-  type: {{ .type | default "ClusterIP" }}
-  selector:
-    app.kubernetes.io/name: {{ include "otel-collector.name" $ }}
-    app.kubernetes.io/instance: {{ $.Release.Name }}
+  type: {{ .Values.service.type }}
   ports:
-  {{- if kindIs "slice" .ports }}
-    {{- range .ports }}
-  - name: {{ .name | default (printf "port-%d" .port) }}
-    port: {{ .port }}
-    targetPort: {{ .targetPort | default .port }}
-    protocol: {{ .protocol | default "TCP" }}
-    {{- end }}
-  {{- else }}
-  - name: {{ .name | default (printf "port-%d" .port) }}
-    port: {{ .port }}
-    targetPort: {{ .port }}
-    protocol: TCP
-  {{- end }}
----
-{{- end }}
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "otel-collector.selectorLabels" . | nindent 4 }}
