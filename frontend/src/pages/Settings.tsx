@@ -47,7 +47,7 @@ const SettingsPage: React.FC = () => {
       }
 
       try {
-        const res = await axios.post("/account/me", { email });
+        const res = await axios.post("/account-service-service/me", { email });
         setUser(res.data);
       } catch (err: any) {
         console.error("Błąd pobierania danych użytkownika:", err);
@@ -73,12 +73,12 @@ const SettingsPage: React.FC = () => {
     setMessage(null);
 
     try {
-      // Uwaga: backend ma PUT /account/
-      await axios.put("/account/", user);
+      // Uwaga: backend ma PUT /account-service/
+      await axios.put("/account-service/", user);
       setMessage("Dane zostały zaktualizowane ✅");
 
       // odśwież dane po zapisie (żeby updatedAt był aktualny)
-      const refreshed = await axios.post("/account/me", { email: user.email });
+      const refreshed = await axios.post("/account-service/me", { email: user.email });
       setUser(refreshed.data);
     } catch (err: any) {
       console.error("Błąd aktualizacji:", err);
