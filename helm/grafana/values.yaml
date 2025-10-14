@@ -150,7 +150,7 @@ volumes:
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: 
-  - name: loki-config
+  - name: grafana-config
     mountPath: /etc/grafana/provisioning
 
 nodeSelector: {}
