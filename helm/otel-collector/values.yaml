@@ -154,7 +154,7 @@ volumes:
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: 
   - name: otel-collector-config
-    mountPath: /etc/otelcol/
+    mountPath: /etc/otelcol/config.yaml
 
 nodeSelector: {}
 
