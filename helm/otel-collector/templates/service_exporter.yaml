@@ -5,9 +5,9 @@ metadata:
   labels:
     {{- include "otel-collector.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.service_exporter.type }}
   ports:
-    - port: {{ .Values.service.port }}
+    - port: {{ .Values.service_exporter.port }}
       targetPort: http
       protocol: TCP
       name: http
