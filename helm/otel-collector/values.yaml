@@ -143,16 +143,20 @@ autoscaling:
 
 # Additional volumes on the output Deployment definition.
 volumes: []
-# - name: foo
-#   secret:
-#     secretName: mysecret
-#     optional: false
+  - name: otel-collector-config
+    configMap:
+      name: {{ include "otel-collector.fullname" . }}-config
 
 # Additional volumeMounts on the output Deployment definition.
-volumeMounts: []
-# - name: foo
-#   mountPath: "/etc/foo"
-#   readOnly: true
+volumeMounts: 
+  - name: otel-collector-config
+    mountPath: /etc/otelcol/
+
+volumes:
+  
+
+volumeMounts:
+
 
 nodeSelector: {}
 
