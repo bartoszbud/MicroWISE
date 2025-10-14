@@ -41,8 +41,8 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
-            - name: http-collector
-              containerPort: {{ .Values.service_collector.port }}
+            - name: http
+              containerPort: {{ .Values.service.port }}
               protocol: TCP
             - name: http-exporter
               containerPort: {{ .Values.service_exporter.port }}
