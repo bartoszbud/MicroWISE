@@ -151,7 +151,7 @@ volumes:
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: 
   - name: grafana-config
-    mountPath: /etc/grafana/provisioning
+    mountPath: /etc/grafana/provisioning/datasources
 
 nodeSelector: {}
 
