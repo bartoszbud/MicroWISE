@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "otel-collector.fullname"-exporter . }}
+  name: {{ include "otel-collector.fullname" . }}-exporter
   labels:
     {{- include "otel-collector.labels" . | nindent 4 }}
 spec:
