@@ -59,7 +59,6 @@ spec:
           volumeMounts:
             - name: otel-collector-config
               mountPath: /etc/otelcol/config.yaml
-              subPath: config.yml
           {{- with .Values.volumeMounts }}
             {{- toYaml . | nindent 12 }}
           {{- end }}
