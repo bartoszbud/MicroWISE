@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: {{ include "grafana.fullname" . }}-config
 data:
-  config.yaml: |
+  datasources.yaml: |
 {{ .Values.config.datasources | indent 4 }}
