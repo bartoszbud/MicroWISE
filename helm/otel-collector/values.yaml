@@ -145,7 +145,7 @@ autoscaling:
 volumes:
   - name: otel-collector-config
     configMap:
-      name: {{ include "otel-collector.fullname" . }}-config
+      name: otel-collector-config
 
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: 
