@@ -47,7 +47,7 @@ const SettingsPage: React.FC = () => {
       }
 
       try {
-        const res = await axios.post("/account-service-service/me", { email });
+        const res = await axios.post("/account-service/me", { email });
         setUser(res.data);
       } catch (err: any) {
         console.error("Błąd pobierania danych użytkownika:", err);
