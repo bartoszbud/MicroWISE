@@ -20,9 +20,9 @@ spec:
     protocol: {{ .protocol | default "TCP" }}
     {{- end }}
   {{- else }}
-  - name: {{ .name | default (printf "port-%d" .ports) }}
-    port: {{ .ports }}
-    targetPort: {{ .ports }}
+  - name: {{ .name | default (printf "port-%d" .port) }}
+    port: {{ .port }}
+    targetPort: {{ .port }}
     protocol: TCP
   {{- end }}
 ---

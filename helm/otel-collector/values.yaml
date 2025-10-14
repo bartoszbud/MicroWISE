@@ -55,10 +55,10 @@ services:
     # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
     type: ClusterIP
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
-    ports: 4318
+    port: 4318
   - name: otel-collector-exp
     type: ClusterIP
-    ports: 9464
+    port: 9464
 
 # This block is for setting up the ingress for more information can be found here: https://kubernetes.io/docs/concepts/services-networking/ingress/
 ingress:
