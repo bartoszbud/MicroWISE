@@ -1,9 +1,10 @@
+{{- range .Values.services }}
 apiVersion: v1
 kind: Pod
 metadata:
-  name: "{{ include "otel-collector.fullname" . }}-test-connection"
+  name: "{{ include "otel-collector.fullname" $ }}-test-{{ .name }}"
   labels:
-    {{- include "otel-collector.labels" . | nindent 4 }}
+    {{- include "otel-collector.labels" $ | nindent 4 }}
   annotations:
     "helm.sh/hook": test
 spec:
@@ -11,5 +12,7 @@ spec:
     - name: wget
       image: busybox
       command: ['wget']
-      args: ['{{ include "otel-collector.fullname" . }}:{{ .Values.services.port }}']
+      args: ['{{ .name }}:{{ .port }}']
   restartPolicy: Never
+---
+{{- end }}
