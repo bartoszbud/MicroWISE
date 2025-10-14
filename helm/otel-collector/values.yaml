@@ -7,11 +7,11 @@ replicaCount: 1
 
 # This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
 image:
-  repository: nginx
+  repository: otel/opentelemetry-collector
   # This sets the pull policy for images.
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: ""
+  tag: "latest"
 
 # This is for the secrets for pulling an image from a private repository more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/pull-image-private-registry/
 imagePullSecrets: []
@@ -124,14 +124,14 @@ resources: {}
   #   memory: 128Mi
 
 # This is to setup the liveness and readiness probes more information can be found here: https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
-livenessProbe:
-  httpGet:
-    path: /
-    port: http
-readinessProbe:
-  httpGet:
-    path: /
-    port: http
+livenessProbe: {}
+#  httpGet:
+#    path: /
+#    port: http
+readinessProbe: {}
+#  httpGet:
+#    path: /
+#    port: http
 
 # This section is for setting up autoscaling more information can be found here: https://kubernetes.io/docs/concepts/workloads/autoscaling/
 autoscaling:
@@ -159,3 +159,65 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+config:
+  otel_yml: |
+    receivers:
+      otlp:
+        protocols:
+          http: 
+            endpoint: "0.0.0.0:4318"
+          grpc: 
+            endpoint: "0.0.0.0:4317"
+
+    processors:
+      # batch metrics before sending to reduce API usage
+      batch:
+        send_batch_max_size: 1000
+        send_batch_size: 100
+        timeout: 10s
+
+    exporters:
+      prometheus:
+        endpoint: "0.0.0.0:9464"
+
+      #prometheus:
+      #  endpoint: "0.0.0.0:8889"
+      #  enable_open_metrics: true
+
+      otlp/jaeger:
+        endpoint: "http://jaeger:4317"
+        tls:
+          insecure: true
+
+      #zipkin:
+      #  endpoint: http://zipkin:9411/api/v2/spans
+      #  format: proto
+
+      #otlp/tempo:
+      #  endpoint: "http://tempo:4317"
+      #  tls:
+      #    insecure: true
+
+      otlphttp/logs:
+        endpoint: "http://loki:3100/otlp"
+        tls:
+          insecure: true
+  
+      #otlphttp/loki:
+      #  endpoint: "http://loki:3100/loki/api"
+
+    service:
+      pipelines:
+        metrics:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [prometheus]
+        traces:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [otlp/jaeger]
+        logs:
+          receivers: [otlp]
+          processors: [batch]
+          exporters: [otlphttp/logs]
