@@ -152,12 +152,6 @@ volumeMounts:
   - name: otel-collector-config
     mountPath: /etc/otelcol/
 
-volumes:
-  
-
-volumeMounts:
-
-
 nodeSelector: {}
 
 tolerations: []
