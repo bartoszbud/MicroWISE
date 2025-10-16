@@ -45,7 +45,7 @@ management:
     export:
       otlp:
         enabled: true
-        endpoint: http://otel-collector:4318
+        endpoint: http://otel-collector-http:4318
         protocol: http/protobuf
         resource-attributes: 
           service.name: auth-service
