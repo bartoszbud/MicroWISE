@@ -198,7 +198,7 @@ config:
       #  enable_open_metrics: true
 
       otlp/jaeger:
-        endpoint: "jaeger:4317"
+        endpoint: "http://jaeger:4318"
         tls:
           insecure: true
 
