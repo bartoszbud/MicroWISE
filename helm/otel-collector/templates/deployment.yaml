@@ -44,7 +44,7 @@ spec:
             - name: http
               containerPort: {{ .Values.service_http.port }}
               protocol: TCP
-            - name: http
+            - name: grpc
               containerPort: {{ .Values.service_grpc.port }}
               protocol: TCP
             - name: http-exporter
