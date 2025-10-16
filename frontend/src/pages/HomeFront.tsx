@@ -33,7 +33,7 @@ const HomePage: React.FC = () => {
       }
 
       try {
-        const res = await axios.post(`/account-service/me`, {email} );
+        const res = await axios.post(`/account/me`, {email} );
         setUser(res.data);
       } catch (err) {
         console.error("Błąd pobierania danych użytkownika:", err);

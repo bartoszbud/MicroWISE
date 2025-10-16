@@ -37,7 +37,7 @@ public class AuthenticationService {
     private final RestTemplate restTemplate;
 
     // URL mikroserwisu employee
-    private final String employeeServiceUrl = "http://account:8080/account/add";
+    private final String employeeServiceUrl = "http://account-service:8080/account/add";
 
     public AuthenticationService(
             AuthenticationManager authenticationManager,

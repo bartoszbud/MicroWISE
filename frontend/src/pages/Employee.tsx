@@ -44,7 +44,7 @@ const AccountsCrud: React.FC = () => {
 
   const fetchAccounts = async () => {
     try {
-      const response = await axios.get('/account-service/all', { headers: { 'Content-Type': 'application/json' } });
+      const response = await axios.get('/account/all', { headers: { 'Content-Type': 'application/json' } });
       setAccounts(response.data);
     } catch (error) {
       console.error('Error fetching accounts:', error);
@@ -69,10 +69,10 @@ const AccountsCrud: React.FC = () => {
       if (editingId) {
         const updateForm = { id: editingId, ...form };
         log.info('Updating account:', updateForm);
-        await axios.put(`/account-service/`, updateForm, { headers: { 'Content-Type': 'application/json' } });
+        await axios.put(`/account/`, updateForm, { headers: { 'Content-Type': 'application/json' } });
       } else {
         log.info('Adding new account:', form);
-        await axios.post(`/account-service/add`, form, { headers: { 'Content-Type': 'application/json' } });
+        await axios.post(`/account/add`, form, { headers: { 'Content-Type': 'application/json' } });
         log.info('Account added successfully');
       }
       setForm({ firstName: '', lastName: '', age: '', email: '', nickname: '' });
@@ -92,7 +92,7 @@ const AccountsCrud: React.FC = () => {
   const handleDelete = async (id: number) => {
     try {
       log.info('Deleting account with id:', id);
-      await axios.delete(`/account-service/${id}`, { headers: { 'Content-Type': 'application/json' } });
+      await axios.delete(`/account/${id}`, { headers: { 'Content-Type': 'application/json' } });
       log.info('Account deleted successfully');
       alert('Account deleted successfully');
       fetchAccounts();

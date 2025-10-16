@@ -1,14 +1,14 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "otel-collector.fullname" . }}
+  name: {{ include "otel-collector.fullname" . }}-grpc
   labels:
     {{- include "otel-collector.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.service_grpc.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: {{ .Values.service.targetPort }}
+    - port: {{ .Values.service_grpc.port }}
+      targetPort: {{ .Values.service_grpc.targetPort }}
       protocol: TCP
       name: http
   selector:

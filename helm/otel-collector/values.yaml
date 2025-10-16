@@ -50,12 +50,20 @@ securityContext: {}
   # runAsUser: 1000
 
 # This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
-service:
+service_http:
   # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
   type: ClusterIP
   targetPort: 4318
   # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
   port: 4318
+
+# This is for setting up a service more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/
+service_grpc:
+  # This sets the service type more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services-service-types
+  type: ClusterIP
+  targetPort: 4317
+  # This sets the ports more information can be found here: https://kubernetes.io/docs/concepts/services-networking/service/#field-spec-ports
+  port: 4317
 
 service_exporter:
   type: ClusterIP
@@ -156,7 +164,7 @@ volumes:
 # Additional volumeMounts on the output Deployment definition.
 volumeMounts: 
   - name: otel-collector-config
-    mountPath: /etc/otelcol/
+    mountPath: /etc/otelcol/config.yaml
 
 nodeSelector: {}
 
@@ -190,7 +198,7 @@ config:
       #  enable_open_metrics: true
 
       otlp/jaeger:
-        endpoint: "http://jaeger:4317"
+        endpoint: "http://jaeger:16686"
         tls:
           insecure: true
 
