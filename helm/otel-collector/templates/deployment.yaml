@@ -42,7 +42,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service_http.port }}
+              protocol: TCP
+            - name: http
+              containerPort: {{ .Values.service_grpc.port }}
               protocol: TCP
             - name: http-exporter
               containerPort: {{ .Values.service_exporter.port }}
