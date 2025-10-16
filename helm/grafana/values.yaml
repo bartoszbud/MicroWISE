@@ -182,7 +182,7 @@ config:
     - name: Jaeger
       type: jaeger
       access: proxy
-      url: http://jaeger:16686
+      url: http://jaeger-gui:16686
       isDefault: false
       editable: false
 
