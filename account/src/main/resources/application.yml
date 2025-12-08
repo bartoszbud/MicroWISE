@@ -43,7 +43,7 @@ otel:
   exporter:
     otlp:
       protocol: http/protobuf
-      endpoint: http://otel-collector:4318
+      endpoint: http://otel-collector-http:4318
   resource:
     attributes:
       service.name: account-service

@@ -77,7 +77,7 @@ services:
       POSTGRES_USER: account
       POSTGRES_PASSWORD: account123
       POSTGRES_DB: account
-  auth:
+  auth-service:
     build: ./auth-service
     image: auth-service:0.0.6
     container_name: auth-service
@@ -87,10 +87,10 @@ services:
       - vault
     environment:
       SECRET_KEY: "gAHIHtgTBVT0LKqGOZpaM2CacosnA7WTMK/DY8yp18CpLg54omSnYLmhDHe3/+dWlWXPFDtqWjKpzV2ehyayIQ=="
-  account:
+  account-service:
     build: ./account
-    image: account:0.0.1
-    container_name: account
+    image: account-service:0.0.1
+    container_name: account-service
     restart: always
     depends_on:
       - db-account

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "otel-collector.fullname" . }}-http
+  labels:
+    {{- include "otel-collector.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service_http.type }}
+  ports:
+    - port: {{ .Values.service_http.port }}
+      targetPort: {{ .Values.service_http.targetPort }}
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "otel-collector.selectorLabels" . | nindent 4 }}

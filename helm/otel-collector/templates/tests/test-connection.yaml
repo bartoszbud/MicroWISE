@@ -1,0 +1,18 @@
+{{- range .Values.services }}
+apiVersion: v1
+kind: Pod
+metadata:
+  name: "{{ include "otel-collector.fullname" $ }}-test-{{ .name }}"
+  labels:
+    {{- include "otel-collector.labels" $ | nindent 4 }}
+  annotations:
+    "helm.sh/hook": test
+spec:
+  containers:
+    - name: wget
+      image: busybox
+      command: ['wget']
+      args: ['{{ .name }}:{{ .port }}']
+  restartPolicy: Never
+---
+{{- end }}
