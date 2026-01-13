@@ -6,7 +6,7 @@ COPY . .
 
 RUN npm install && npm run build
 
-FROM nginx:1.29.0
+FROM nginx:1.29.4
 
 COPY default.conf /etc/nginx/conf.d/default.conf
 COPY --from=builder /opt/build/build/ /var/www/html/
