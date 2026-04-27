@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_bartoszbud_MicroWISE_1777320702035-pr-trigger-input-set
+  identifier: Build_bartoszbud_MicroWISE_1777320702035prtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: MicroWISE
+  pipeline:
+    identifier: Build_bartoszbud_MicroWISE_1777320702035
+    properties:
+      ci:
+        codebase:
+          build:
+            type: PR
+            spec:
+              number: <+trigger.prNumber>
