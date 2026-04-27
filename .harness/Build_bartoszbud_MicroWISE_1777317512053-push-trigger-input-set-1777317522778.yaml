@@ -1,0 +1,14 @@
+inputSet:
+  name: Build_bartoszbud_MicroWISE_1777317512053-push-trigger-input-set
+  identifier: Build_bartoszbud_MicroWISE_1777317512053pushtriggerinputset
+  orgIdentifier: default
+  projectIdentifier: default_project
+  pipeline:
+    identifier: Build_bartoszbud_MicroWISE_1777317512053
+    properties:
+      ci:
+        codebase:
+          build:
+            type: branch
+            spec:
+              branch: <+trigger.branch>
