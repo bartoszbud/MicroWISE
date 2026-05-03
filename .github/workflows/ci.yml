@@ -7,7 +7,7 @@ jobs:
   detect:
     runs-on: ubuntu-latest
     outputs:
-      has_changed: ${{ steps.filter.outputs.changes.json }}
+      has_changed: ${{ steps.filter.outputs.changes }}
     steps:
       - name: Checkout
         uses: actions/checkout@v6
