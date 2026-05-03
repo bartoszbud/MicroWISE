@@ -22,7 +22,7 @@ jobs:
             auth-service:
               - 'services/auth-service/**'
             account-service:
-              - 'services/account-service/**'
+              - 'services/account/**'
   
   build:
     runs-on: ubuntu-latest
