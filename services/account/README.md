@@ -5,6 +5,7 @@ curl -X POST http://localhost:8080/employee/add \
   -H "Content-Type: application/json" \
   -d '{"firstName": "Jan", "lastName": "Kowalski"}'
 ```
+### Update user
 ```bash
 curl -X PUT http://localhost:8080/employee/ \
   -H "Content-Type: application/json" \
