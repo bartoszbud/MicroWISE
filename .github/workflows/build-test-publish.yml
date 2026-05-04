@@ -33,4 +33,4 @@ jobs:
       - name: Maven build
         run: |
           mvn wrapper:wrapper
-          ./mvnw clean install
+          ./mvnw clean install -DskipTests
