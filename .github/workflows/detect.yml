@@ -17,11 +17,11 @@ jobs:
         id: filter
         with:
           filters: |
-            frontend:
+            services/frontend:
               - 'services/frontend/**'
-            auth-service:
+            services/auth-service:
               - 'services/auth-service/**'
-            account-service:
+            services/account-service:
               - 'services/account/**'
   
   build:
