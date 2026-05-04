@@ -25,17 +25,11 @@ jobs:
               - 'services/account/**'
   
   build:
-    runs-on: ubuntu-latest
     needs: detect
     if: ${{ needs.detect.outputs.has_changed != '[]' }}
     strategy:
       matrix:
         service: ${{ fromJson(needs.detect.outputs.has_changed) }}
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v6
-
-      - name: Build ${{ matrix.service }}
-        run: |
-          echo "Building ${{ matrix.service }}"
-
+    uses: ./.github/workflows/build-test-publish.yml
+    with:
+      service_path: ${{ matrix.service }}

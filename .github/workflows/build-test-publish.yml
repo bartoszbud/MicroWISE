@@ -1,0 +1,36 @@
+---
+name: Build, test and publish
+
+on:
+  workflow_call:
+    inputs:
+      service_path:
+        description: 'Path to the service (only for manual dispatch)'
+        required: true
+        type: string
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.service_path }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+        
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: maven
+      
+      - name: Debug
+        run: |
+          java -version && mvn -v
+
+      - name: Maven build
+        run: |
+          mvn wrapper:wrapper
+          ./mvnw clean install
