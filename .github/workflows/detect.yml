@@ -2,6 +2,8 @@ name: MicroWISE CI
 
 on:
   push:
+    paths:
+      - "services/**"
 
 jobs:
   detect:
