@@ -1,0 +1,52 @@
+name: Test
+
+on:
+  workflow_call:
+    inputs:
+      service_path:
+        description: 'Path to the service (only for manual dispatch)'
+        required: true
+        type: string
+
+jobs:
+  main:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ${{ inputs.service_path }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Java
+        if: ${{ ! contains(inputs.service_path, 'frontend') }}
+        uses: actions/setup-java@v5
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: 'maven'
+      
+      - name: Debug
+        if: ${{ ! contains(inputs.service_path, 'frontend') }}
+        run: |
+          java -version && mvn -v
+
+      - name: Maven verify
+        if: ${{ ! contains(inputs.service_path, 'frontend') }}
+        run: |
+          mvn wrapper:wrapper
+          ./mvnw clean verify
+      
+      - name: Setup Node.js
+        if: contains(inputs.service_path, 'frontend')
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+          cache: 'npm'
+          cache-dependency-path: '${{ inputs.service_path }}/package-lock.json'
+      
+      - name: NPM test
+        if: contains(inputs.service_path, 'frontend')
+        run: |
+          npm ci
+

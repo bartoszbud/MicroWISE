@@ -32,6 +32,6 @@ jobs:
     strategy:
       matrix:
         service: ${{ fromJson(needs.detect.outputs.has_changed) }}
-    uses: ./.github/workflows/build-test-publish.yml
+    uses: ./.github/workflows/test.yml
     with:
       service_path: ${{ matrix.service }}
