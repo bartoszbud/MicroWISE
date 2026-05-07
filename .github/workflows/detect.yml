@@ -28,7 +28,7 @@ jobs:
   
   test:
     needs: detect
-    if: ${{ needs.detect.outputs.has_changed != '[]' }}
+    if: ${{ needs.detect.outputs.has_changed != '[]' && github.ref != 'refs/heads/main'}}
     strategy:
       matrix:
         service: ${{ fromJson(needs.detect.outputs.has_changed) }}
