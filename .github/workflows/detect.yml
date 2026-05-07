@@ -26,12 +26,22 @@ jobs:
             services/account-service:
               - 'services/account/**'
   
-  build:
+  test:
     needs: detect
     if: ${{ needs.detect.outputs.has_changed != '[]' }}
     strategy:
       matrix:
         service: ${{ fromJson(needs.detect.outputs.has_changed) }}
     uses: ./.github/workflows/test.yml
+    with:
+      service_path: ${{ matrix.service }}
+  
+  build-test-publish:
+    needs: detect
+    if: ${{ needs.detect.outputs.has_changed != '[]' && github.ref == 'refs/heads/main' }}
+    strategy:
+      matrix:
+        service: ${{ fromJson(needs.detect.outputs.has_changed) }}
+    uses: ./.github/workflows/build-test-publish.yml
     with:
       service_path: ${{ matrix.service }}
