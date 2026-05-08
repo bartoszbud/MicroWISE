@@ -1,4 +1,5 @@
-name: MicroWISE CI
+---
+name: Detect Changes
 
 on:
   push:
