@@ -36,13 +36,13 @@ jobs:
     uses: ./.github/workflows/test.yml
     with:
       service_path: ${{ matrix.service }}
-  
-  build-test-publish:
+
+  semantic_release:
     needs: detect
     if: ${{ needs.detect.outputs.has_changed != '[]' && github.ref == 'refs/heads/main' }}
     strategy:
       matrix:
         service: ${{ fromJson(needs.detect.outputs.has_changed) }}
-    uses: ./.github/workflows/build-test-publish.yml
+    uses: ./.github/workflows/semantic-release.yml
     with:
       service_path: ${{ matrix.service }}
