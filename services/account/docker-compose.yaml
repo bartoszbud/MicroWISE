@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres
-    container_name: db-account-dev
+    container_name: db-account
     restart: always
     shm_size: 128mb
     ports:
@@ -18,7 +18,7 @@ services:
       - 8080:8080
   adminer:
     image: adminer
-    container_name: adminer-account-dev
+    container_name: adminer-account
     restart: always
     ports:
       - 8081:8080
