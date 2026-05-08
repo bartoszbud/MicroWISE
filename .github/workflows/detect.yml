@@ -23,7 +23,7 @@ jobs:
               - 'services/frontend/**'
             services/auth-service:
               - 'services/auth-service/**'
-            services/account-service:
+            services/account:
               - 'services/account/**'
   
   test:
